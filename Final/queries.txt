@@ -1,0 +1,34 @@
+/* Query 1 */
+SELECT a.Title Album_Name,
+       COUNT(*) num_of_tracks
+FROM Album a
+JOIN Track t ON a.AlbumId = t.AlbumId
+GROUP BY a.AlbumId
+ORDER BY num_of_tracks DESC
+LIMIT 10;
+
+/* Query 2 */
+SELECT m.Name mediaType,
+       SUM(il.Quantity) tracks_sold
+FROM MediaType m
+JOIN Track t ON m.MediaTypeId = t.MediaTypeId
+JOIN InvoiceLine il ON t.TrackId = il.TrackId
+GROUP BY 1
+ORDER BY 2;
+
+/* Query 3 */
+SELECT p.Name playlist,
+       SUM(t.Milliseconds)/60000 Minutes
+FROM Playlist p
+JOIN PlaylistTrack pt ON pt.PlaylistId = p.PlaylistId
+JOIN Track t ON t.TrackId = pt.TrackId
+GROUP BY Playlist
+ORDER BY Minutes DESC;
+
+/* Query 4 */
+SELECT g.Name genre,
+       COUNT(*) Tracks
+FROM Genre g
+JOIN Track t ON g.GenreId = t.GenreId
+GROUP BY g.GenreId
+ORDER BY Tracks DESC;
